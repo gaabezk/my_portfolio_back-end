@@ -14,7 +14,6 @@ public class UploadFileToS3CommandCommandHandler(IS3Service s3Service) : IReques
 {
     public async Task<Unit> Handle(UploadFileToS3Command request, CancellationToken cancellationToken)
     {
-        await s3Service.UploadFileAsync(request.BucketName, request.File.FileName, request.File.OpenReadStream(), cancellationToken);
-        return Unit.Value;
+        return await s3Service.UploadFileAsync(request.BucketName, request.File.FileName, request.File.OpenReadStream(), cancellationToken);
     }
 }

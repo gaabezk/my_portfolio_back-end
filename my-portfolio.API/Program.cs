@@ -9,7 +9,8 @@ using my_portfolio.Infra.CrossCutting.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IS3Service, S3Service>(); 
+builder.Services.AddScoped<IS3Service, S3Service>();
+builder.Services.AddScoped<ISqsService, SqsService>(); 
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

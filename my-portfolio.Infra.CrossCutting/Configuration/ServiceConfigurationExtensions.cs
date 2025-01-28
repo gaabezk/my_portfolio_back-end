@@ -1,5 +1,6 @@
 ﻿
 using Amazon.S3;
+using Amazon.SQS;
 using Infra.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ public static class ServiceConfigurationExtensions
         var awsOptions = builder.Configuration.GetAWSOptions();
         builder.Services.AddDefaultAWSOptions(awsOptions);
         builder.Services.AddAWSService<IAmazonS3>();
+        builder.Services.AddAWSService<IAmazonSQS>();
     }
     
     public static void AddDatabaseConfiguration(this WebApplicationBuilder builder)

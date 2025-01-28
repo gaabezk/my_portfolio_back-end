@@ -1,22 +1,36 @@
-﻿using System.Net;
-using Amazon.S3;
+﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Application.Services;
+using MediatR;
 
-namespace Infra.Services;
-
-public class S3Service(IAmazonS3 s3Client) : IS3Service
+namespace Infra.Services
 {
-    public async Task<string> UploadFileAsync(string bucketName, string fileName, Stream fileStream, CancellationToken cancellationToken)
+    public class S3Service(IAmazonS3 s3Client) : IS3Service
     {
-        var putRequest = new PutObjectRequest
+        public async Task<Unit> UploadFileAsync(string bucketName, string fileName, Stream fileStream,
+            CancellationToken cancellationToken)
         {
-            BucketName = bucketName,
-            Key = fileName,
-            InputStream = fileStream
-        };
+            try
+            {
+                var putRequest = new PutObjectRequest
+                {
+                    BucketName = bucketName,
+                    Key = fileName,
+                    InputStream = fileStream
+                };
 
-        var response = await s3Client.PutObjectAsync(putRequest, cancellationToken);
-        return response.HttpStatusCode == HttpStatusCode.OK ? "Success" : "Error";
+                await s3Client.PutObjectAsync(putRequest, cancellationToken);
+                return Unit.Task.Result;
+
+            }
+            catch (AmazonS3Exception s3Ex)
+            {
+                throw new AmazonS3Exception($"AWS S3 error: {s3Ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"General error: {ex.Message}");
+            }
+        }
     }
 }
