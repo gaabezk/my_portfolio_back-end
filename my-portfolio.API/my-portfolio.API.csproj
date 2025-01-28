@@ -8,8 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="MediatR" Version="12.4.1" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.12"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\my-portfolio.Application\my-portfolio.Application.csproj" />
+      <ProjectReference Include="..\my-portfolio.Infra.CrossCutting\my-portfolio.Infra.CrossCutting.csproj" />
+      <ProjectReference Include="..\my-portfolio.Infra.Data\my-portfolio.Infra.Data.csproj" />
     </ItemGroup>
 
 </Project>
