@@ -12,12 +12,17 @@
       <PackageReference Include="AWSSDK.S3" Version="3.7.412.2" />
       <PackageReference Include="AWSSDK.SecretsManager" Version="3.7.400.82" />
       <PackageReference Include="AWSSDK.SQS" Version="3.7.400.82" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
-      <PackageReference Include="MySqlConnector" Version="2.4.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.12" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.12">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\my-portfolio.Application\my-portfolio.Application.csproj" />
+      <ProjectReference Include="..\my-portfolio.Domain\my-portfolio.Domain.csproj" />
     </ItemGroup>
 
 </Project>

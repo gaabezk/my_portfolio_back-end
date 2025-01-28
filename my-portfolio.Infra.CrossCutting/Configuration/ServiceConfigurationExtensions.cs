@@ -1,6 +1,8 @@
 ﻿
 using Amazon.S3;
+using Infra.Contexts;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,9 +19,11 @@ public static class ServiceConfigurationExtensions
     
     public static void AddDatabaseConfiguration(this WebApplicationBuilder builder)
     {
-        // Configuração do banco de dados (PostgreSQL)
-        // Você pode configurar o banco de dados aqui como quiser
-        // builder.Services.AddDbContext<AppDbContext>(options =>
-        //     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+        // Adiciona o DbContext com a string de conexão
+        builder.Services.AddDbContext<DefaultDbContext>(options =>
+            options.UseMySql(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                new MySqlServerVersion(new Version(8, 0, 39)) // Versão do MySQL
+            ));
     }
 }
