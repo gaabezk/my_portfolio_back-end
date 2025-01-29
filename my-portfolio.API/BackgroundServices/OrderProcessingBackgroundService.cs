@@ -1,4 +1,4 @@
-﻿using Application.Services;
+﻿using Application.Interfaces.Services;
 using Domain.Models.Entities;
 using Newtonsoft.Json;
 
@@ -27,7 +27,7 @@ public class OrderProcessingBackgroundService(ISqsService sqsService, string que
                 }
             }
 
-            await Task.Delay(5000, stoppingToken);  // Delay para evitar sobrecarga
+            await Task.Delay(500000, stoppingToken);  // Delay para evitar sobrecarga
         }
     }
 
@@ -36,7 +36,7 @@ public class OrderProcessingBackgroundService(ISqsService sqsService, string que
             try
             {
                 var order = JsonConvert.DeserializeObject<Order>(message);
-                return order != null && order.Products != null && order.Products.Any();
+                return order != null && order.OrderProducts.Count != 0;
             }
             catch (JsonException)
             {
@@ -54,7 +54,7 @@ public class OrderProcessingBackgroundService(ISqsService sqsService, string que
                 return;
             }
 
-            Console.WriteLine($"Processando pedido {order.Id} com {order.Products.Count()} produtos");
+            Console.WriteLine($"Processando pedido {order.Id} com {order.OrderProducts.Count} produtos");
             
             await SaveOrderToDatabaseAsync(order);
         }
@@ -68,7 +68,7 @@ public class OrderProcessingBackgroundService(ISqsService sqsService, string que
         private async Task SaveOrderToDatabaseAsync(Order order)
         {
             Console.WriteLine($"Salvando pedido {order.Id} no banco de dados...");
-            // await _orderRepository.SaveAsync(order);
+            // await _orderService.CreateOrderAsync(order);
         }
 
         private async Task SaveInvalidMessageToDatabaseAsync(string message)

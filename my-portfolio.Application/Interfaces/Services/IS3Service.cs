@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Services;
+namespace Application.Interfaces.Services;
 
 public interface IS3Service
 {

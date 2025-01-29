@@ -1,6 +1,6 @@
 ﻿using Amazon.SQS;
 using Amazon.SQS.Model;
-using Application.Services;
+using Application.Interfaces.Services;
 using MediatR;
 
 namespace Infra.Services;

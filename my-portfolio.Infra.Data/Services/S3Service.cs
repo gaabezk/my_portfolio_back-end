@@ -1,6 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
-using Application.Services;
+using Application.Interfaces.Services;
 using MediatR;
 
 namespace Infra.Services;
